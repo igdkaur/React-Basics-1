@@ -1,0 +1,26 @@
+<!-- to create a <div> element using raw JavaScript and browser APIs
+  div with an ID of root, application is going to be mounted.
+  Type for script is going to be text/JavaScript
+  To access the div with id root , create varaiable rootElement
+  Take this rootElement and append a child. Need to append an element to this.
+  create that element with document.createElement. Make it div.
+  For this element, we want text content and class name -->
+
+  <!-- to create a user interface in JavaScript, 
+  need a place to append JavaScript-generated DOM elements. 
+  will get access to that element from the document APIs. 
+  Wll create our own element. 
+  will add some properties onto that element. 
+  Will append that element to our rootElement. -->
+
+
+<body>
+   <div id="root"></div> <!--div with an ID of root. our application is going to be mounted here. also, a place to append JavaScript-generated DOM elements --> 
+  <script type="text/javascript">
+    const rootElement = document.getElementById('root') //to access div, make variable called rootElement. get access to JavaScript-generated DOM elements from the document APIs.
+    const element = document.createElement('div') //create element with document.createElement
+    element.textContent = 'Hello Worldss' // add properties to element
+    element.className = 'container'
+    rootElement.appendChild(element) //rootElement will append a child element (append element to root element)
+  </script>
+</body>
