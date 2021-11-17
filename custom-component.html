@@ -1,0 +1,53 @@
+// we had some code that was being duplicated, 
+// and we wanted to reuse that code in multiple places. 
+// So, we created our own custom function component 
+// which is a function that accepts a props object and returns more React elements.
+
+
+// We had to make sure that our function component started with a capital letter 
+// so that Babel would compile this to pass the function itself to React.createElement 
+// rather than the string message to React.createElement. 
+// That way, when React renders our element, it knows what function to call.
+
+
+
+
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+    
+    const Message = props => <div className="message"> {props.children} </div>
+    const element = (
+      <div className="container">
+        <Message>Hello World</Message>
+        <Message>Goodbye World</Message>
+      </div>
+    )
+
+    {/* //<message> Hello World </message> //uppercase
+
+    // const message = props => <div className="message"> {props.msg}</div>
+    // const element = (
+    //   <div className="container">
+    //     {message({msg:'Hello'})}
+    //     {message({msg:'World'})}
+    //   </div>
+    // )
+
+    // function Message({children}) {
+    //   return <div className="message">{children}</div>
+    // }
+
+    // const element = (
+    //   <div className="container">
+    //     <Message>Hello World</Message>
+    //     <Message>Goodbye World</Message>
+    //   </div>
+    // ) */}
+
+    ReactDOM.render(element, document.getElementById('root'))
+  </script>
+</body>
