@@ -1,0 +1,75 @@
+<!-- create React elements and then use ReactDOM to render those elements to the page. -->
+
+<!-- React’s createElement API to create React elements and then hand those off to React DOM to get them to show up on the screen. -->
+  <!-- 
+  1. need react and react dom on page
+        react - create elements
+        react dom -  to render the elements to page
+        use unpkg to get react on page
+        we still need to get access to some element that's on the page so we can render our elements to that DOM node. -- we use div with id root
+  2. after we have react and react dom - create react elements and render them to page via react dom
+  3. process- render our element to root element
+  4. react element is not same as the DOM element created via document.
+  5. created via React.createElement with react
+
+differences
+  6. api not same as doc
+      the first argument in both is type of element but 
+      but instead of getting the element and attaching properties to it, we specify those properties on creation as an object.
+      const element = React.createElement('div', {})
+
+      -----js----
+      const element = document.createElement('div')
+      ----- react ----
+      const element = React.createElement('div', {
+          className: 'container',
+          children: 'Hello World',
+        })
+  7. Another difference is instead of text content, we specify children. 
+  8. the element is not a DOM node.-- $$typeOf : Symbol(react.element) - denotes that its a react element
+  9. other ways to add children property 
+      1-----
+      const element = React.createElement('div', {
+        className: 'container',
+      
+      }, 
+      'Hello World',
+      'hello again'
+      )
+     
+      get element props children as array
+
+      2----
+      can use children prop directly
+
+      const element = React.createElement('div', {
+          className: 'container',
+          children:['Hello World','Hello Again']
+        })
+      
+
+      3----
+      creating additional React elements to be children
+
+      const element = React.createElement('div', {
+        children: React.createElement('span',null,'Hello','World'),
+        className: 'Hello World',
+      })
+
+      
+      type of span, the props are null, the children are an array of "Hello" and "World". 
+      in dev tools - we'll see props, children, and children is just another React element that itself has props. And that children is an array of two strings. -->
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+    <script type="text/javascript">
+      const rootElement = document.getElementById('root')
+      const element = React.createElement('div', {
+        className: 'container',
+        children: 'Hello World',
+      })
+      ReactDOM.render(element, rootElement)
+    </script>
+  </body>

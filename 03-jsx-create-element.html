@@ -1,0 +1,32 @@
+<!-- https://babeljs.io/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.6&spec=false&loose=false&code_lz=Q&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=false&targets=&version=7.16.3&externalPlugins=&assumptions=%7B%7D -->
+
+
+<!-- interact directly with React’s createElement API to create React elements and 
+then hand those off to React DOM to get them to show up on the screen. 
+But it’s not the most ergonomic API to write our UI code in. 
+It’s hard to track when one element starts and the next one ends.
+
+This is why the React team came up with JSX. 
+It’s an extension to the JavaScript language to support syntax that looks similar to the HTML 
+that you would write to create these DOM elements. 
+JSX gives us an expressive syntax for representing our UI, without losing the benefits and powers of writing our UI in JavaScript. 
+how JSX is compiled to regular JavaScript calls -->
+
+<!-- 
+this is not JavaScript code. This is JSX. The browser does not understand this natively. 
+It needs to be compiled from this to something that the browser can understand. That's where Babel comes in.
+Babel is a JavaScript compiler supporting the next generation of JavaScript as well as non-standard features like JSX 
+Babel is managing, compiling code down to JavaScript that the browser can execute using React APIs.
+-->
+
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel"> // changed script type
+    const rootElement = document.getElementById('root')
+    const element = <div className="container">Hello World</div> // jsx 
+    ReactDOM.render(element, rootElement)
+  </script>
+</body>
