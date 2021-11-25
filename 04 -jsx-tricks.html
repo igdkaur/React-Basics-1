@@ -2,10 +2,10 @@
 and have that expression passed along to the React.createElement API.
 
 spread props in the props position of a JSX element 
-and those props will be combined with the other props that are provided to that element in a declarative and deterministic way. -->
+and those props will be combined with the other props that are provided to that element in a declarative and deterministic way. 
 Anything you put between these two curly braces can be a JavaScript expression. 
 Whatever that expression evaluates to is the value 
-that gets placed into this position for the React.createElement call.
+that gets placed into this position for the React.createElement call. -->
 
 <!-- we'll put curly braces to suggest to the Babel compiler 
 that we want this value to be evaluated as an expression,
@@ -25,21 +25,21 @@ Whatever comes last is the winner in the event of a conflict like we have here. 
     <script type="text/babel">
       const rootElement = document.getElementById('root')
       const children = 'Hello World'
-      const childrenTwo = 'HEllo again'
+      const childrenTwo = 'Hello again'
       const myClassName = 'container'
       const props = {children, className}
       const element = <div id = "app-root"{...props} className= "not-container"/>
 
-     //const element = <div className = {myClassName} children ={{children}} /> // self closing tag
-    //   const element = <div className = {myClassName} children ={children}></div>
-      //const element = <div className = {myClassName} > {children} {childrenTwo} </div>
-     // const element = <div className = {myClassName} > {children} </div>
-      //const element = <div className = 'container' > {children} </div>
-      //const element = <div className="container">Hello World</div> 
-      ReactDOM.render(element, rootElement)
+    //const element = <div className={myClassName} children={children} /> // self closing tag
+    //const element = <div className={myClassName} children={children}> </div>
+    //const element = <div className={myClassName}> {children} {childrenTwo} </div>
+    //const element = <div className={myClassName}> {children} </div>
+    //const element = <div className='container'> {children} </div>
+    //const element = <div className="container"> 'Hello World' </div>
+
+    ReactDOM.render(element, rootElement)
     </script>
-  </body>
-   -->
+  </body> -->
 
    <body>
     <div id="root"></div>

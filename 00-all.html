@@ -1,0 +1,156 @@
+
+
+<!-- 1. create element js -->
+<body>
+  <div id="root"></div> <!--div with an ID of root. our application is going to be mounted here. also, a place to append JavaScript-generated DOM elements --> 
+ <script type="text/javascript">
+   const rootElement = document.getElementById('root') //to access div, make variable called rootElement. get access to JavaScript-generated DOM elements from the document APIs.
+   const element = document.createElement('div') //create element with document.createElement
+   element.textContent = 'Hello Worldss' // add properties to element
+   element.className = 'container'
+   rootElement.appendChild(element) //rootElement will append a child element (append element to root element)
+ </script>
+</body>
+
+
+
+<!-- 2. create element react -->
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script type="text/javascript">
+    const rootElement = document.getElementById('root')
+    const element = React.createElement('div', {
+      className: 'container',
+      children: 'Hello World',
+    })
+
+    // const element = React.createElement('div', {
+    //     className: 'container',
+
+    //   },
+    //     'Hello World',
+    //     'hello again'
+    //   )
+
+    // const element = React.createElement('div', {
+    //     className: 'container',
+    //     children: ['Hello World', 'Hello Again']
+    // })
+
+
+    // const element = React.createElement('div', {
+    //   children: React.createElement('span', null, 'Hello', 'World'),
+    //   className: 'Hello World',
+    // })
+
+
+    ReactDOM.render(element, rootElement)
+  </script>
+</body>
+
+
+<!-- 3. create element jsx -->
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel"> // changed script type
+    const rootElement = document.getElementById('root')
+    const element = <div className="container">Hello World</div> // jsx 
+    ReactDOM.render(element, rootElement)
+  </script>
+</body>
+
+<!-- 4. jsx -->
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+    const rootElement = document.getElementById('root')
+    const children = 'Hello World'
+    const className = 'container'
+    const props = {children, className}
+    const element = <div {...props} />
+    ReactDOM.render(element, rootElement)
+  </script>
+</body>
+
+<!-- 5. fragments -->
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+    const element = (
+        <>
+        <span>Hello</span> <span>World</span>
+      </>
+
+    //   <React.Fragment>
+    //     <span>Hello</span> <span>World</span>
+    //   </React.Fragment>
+    )
+    ReactDOM.render(element, document.getElementById('root'))
+  </script>
+</body>
+
+
+<!-- 6. custom component -->
+
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+      const Message = props => <div className="message"> {props.children} </div>
+      const element = (
+        <div className="container">
+          <Message>Hello World</Message>
+          <Message>Goodbye World</Message>
+        </div>
+      )
+    ReactDOM.render(element, document.getElementById('root'))
+  </script>
+</body>
+
+
+<!-- 7. proptypes -->
+
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6.1/prop-types.js"></script>
+  <script type="text/babel">
+    const rootElement = document.getElementById('root')
+
+    function SayHello({firstName, lastName}) {
+      return (
+        <div>
+          Hello {firstName} {lastName}!
+        </div>
+      )
+    }
+    SayHello.propTypes = {
+      firstName: PropTypes.string.isRequired,
+      lastName: PropTypes.string.isRequired,
+    }
+
+    const element = <SayHello firstName={"jay"} lastName = {"singh"} />
+
+    ReactDOM.render(element, rootElement)
+  </script>
+</body>
+
+
+<!-- 7. proptypes -->
+
+

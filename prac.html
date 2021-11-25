@@ -1,0 +1,56 @@
+
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+ 
+ function Cc ({text}) {
+  const len = text.length ? text.length : "no"
+   return (
+     <div>
+      {`the text has ${len} characters`}
+      
+      </div>
+   )
+ }
+
+
+ const element = (
+   <>
+   <Cc text = "Hello">  </Cc>
+
+   </>
+ )
+
+    ReactDOM.render(element, document.getElementById('root'))
+  </script>
+</body>
+
+
+
+<!-- function Cc ({text}) {
+  return null
+} -->
+
+<!-- `${len}` -->
+
+<!-- function Cc ({text}) {
+  const len = text.length
+   return (
+     <div>
+      {len ?  `${len}`: "no" } 
+      </div>
+   )
+ } -->
+
+ <!-- the text has {len} characters  - the text has 5 characters -->
+
+ <!-- the text has `${len}` characters - the text has `$5` characters -->
+
+ <!-- { `the text has ${len} characters` } - the text has 5 characters -->
+ <!-- the text has {text.length ? text.length : "no"} characters -->
+
+ <!-- {"the text has {len} characters"} - the text has {len} characters -->
+ <!-- {"the text has `${len}` characters"} the text has `${len}` characters -->
