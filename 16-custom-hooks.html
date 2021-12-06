@@ -1,0 +1,75 @@
+<!-- for storing some state into localStorage and 
+keeping it synchronized 
+useful in other areas of our application
+make a function
+generalize the code 
+Instead of getting the item with the string name, 
+ it might make more sense for the user of this function 
+ to provide us a key for localStorage, 
+ so we'll accept a parameter called key.
+
+ Instead of this as a default value, 
+ it might make sense for people to provide us their own default value. 
+ We'll accept that as another parameter. We can default 
+ that to an empty string just in case they don't want to provide it. -->
+
+ <!-- we're going to need to get access to that stateUpdater function and 
+ to the state value itself. 
+ Let's return state and setState. 
+ We can make our custom Hook have a similar API 
+ to useState so it's familiar to people who are used to the useState Hook.
+
+ what we did here is we took some code 
+ that was in our function component. 
+ We moved it into its own function and 
+ then called it from our function component. 
+ This was no different from any other regular 
+ javaScript refactor, which makes it easy to share logic across components and even make open source libraries that expose custom Hooks like this.
+
+ use prefix on our custom Hooks so that we follow the community convention and the ESLint plugin can help us avoid mistakes.
+
+ Before, we had this key hardcoded as name. 
+ It couldn't ever change. My dependency array didn't need to include that. Now, I'm accepting a key as a parameter from the users of the LocalStorageState custom Hook. They could potentially change that value. If they do, then I need to make sure to respond to that change 
+ so that I update local storage and not lose any of the user's work
+ It's important that in your applications you use and follow that ESLint rule so you can avoid bugs like this. 
+ With this in mind, we could make this useLocalStorageState Hook a lot more robust by removing the item at the old key if that key has changed. 
+ I'm going to leave that as a fun exercise for you to do late -->
+ 
+
+ <body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+    function useLocalStorageState(key, defaultValue = '') {
+      const [state, setState] = React.useState(
+        () => window.localStorage.getItem(key) || defaultValue,
+      )
+
+      React.useEffect(() => {
+        window.localStorage.setItem(key, state)
+      }, [key, state])
+
+      return [state, setState]
+    }
+
+    function Greeting() {
+      const [name, setName] = useLocalStorageState('name')
+
+      const handleChange = event => setName(event.target.value)
+
+      return (
+        <div>
+          <form>
+            <label htmlFor="name">Name: </label>
+            <input value={name} onChange={handleChange} id="name" />
+          </form>
+          {name ? <strong>Hello {name}</strong> : 'Please type your name'}
+        </div>
+      )
+    }
+
+    ReactDOM.render(<Greeting />, document.getElementById('root'))
+  </script>
+</body>
