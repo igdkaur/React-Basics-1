@@ -1,0 +1,167 @@
+<!-- We have a function component called Tilt. 
+but we can make it do something fancy 
+by using a library that I've included called vanilla-tilt. 
+----
+Vanilla-tilt takes a DOM node and 
+makes it react to when the user mouses over that DOM node.
+---
+The DOM node we want to give it is the DOM node 
+that's created for this element, 
+the tilt root. 
+
+Remember this is a React element, 
+not a DOM node and 
+React takes that React element and renders it to the DOM.
+
+We need React to give us the DOM node 
+that creates for this particular React element 
+so we can wire up vanilla-tilt to it. 
+To do this, 
+---
+we're going to use a ref prop and 
+<div ref ={ }> </div>
+we need to pass a ref which is an object that has a mutable current property.
+-----
+
+
+use the React.useRef hook. 
+From that we'll get our tiltRef and 
+then we can copy that, paste it here to our ref. 
+ref ={tiltRef}
+Then the tiltRef is an object that has a current property.
+
+ That current property is the current value for this ref object.
+
+In our case, because we're passing this ref to a div with a ref prop, 
+that current property will be the DOM node 
+that React creates for this div. 
+
+
+If we console.log tiltRef.current, and 
+we save that then we should be seeing the DOM node.
+That current property is the current value for this ref object.
+ const tiltRef = React.useRef()
+
+We actually see undefined. 
+The reason we see that is 
+because at the time that this function runs, 
+React has not created the DOM node for this div, 
+so the tiltRef.current is currently undefined. 
+In fact, you can initialize that current value by passing an 
+argument to their useRef hook.
+const tiltRef = React.useRef("here pass") 
+
+how do we get the DOM node so we can initialize vanilla-tilt on it? 
+
+
+The reason that useRef is an object 
+that has a current property is so 
+that we can mutate the current property to be whatever we want 
+without triggering a re-render of our component. 
+We can use refs for more than just DOM nodes like we're using here.
+ We can use it for any value that we want to keep track of and 
+ mutate over time without triggering a re-render of our component.
+ After a component has been mounted, 
+ our useEffect callback is going to be called. 
+ We get the tilt node from our tilt ref current property. 
+ We create some vanilla-tilt options and pass those to the initialization for our tilt node with vanilla-tilt.
+Then we return a cleanup function so that we can remove all references of our DOM node in vanilla-tilt and remove all the event listeners that vanilla-tilt put on our DOM node. -->
+
+
+
+
+
+
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script src="https://unpkg.com/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+  <style>
+    /*
+    Taken from the vanilla-tilt.js demo site:
+    https://micku7zu.github.io/vanilla-tilt.js/index.html
+    */
+    .tilt-root {
+      height: 150px;
+      background-color: red;
+      width: 200px;
+      background-image: -webkit-linear-gradient(
+        315deg,
+        #ff00ba 0%,
+        #fae713 100%
+      );
+      background-image: linear-gradient(135deg, #ff00ba 0%, #fae713 100%);
+      transform-style: preserve-3d;
+      will-change: transform;
+      transform: perspective(1000px) rotateX(0deg) rotateY(0deg)
+        scale3d(1, 1, 1);
+    }
+    .tilt-child {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translateZ(30px) translateX(-50%) translateY(-50%);
+      box-shadow: 0 0 50px 0 rgba(51, 51, 51, 0.3);
+      background-color: white;
+    }
+    .totally-centered {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+  <script type="text/babel">
+    function Tilt({children}) {
+      const tiltRef = React.useRef()
+
+      React.useEffect(() => {
+        const tiltNode = tiltRef.current
+        const vanillaTiltOptions = {
+          max: 25,
+          speed: 400,
+          glare: true,
+          'max-glare': 0.5,
+        }
+        VanillaTilt.init(tiltNode, vanillaTiltOptions)
+        return () => {
+          tiltNode.vanillaTilt.destroy()
+        }
+      }, [])
+
+      return (
+        <div ref={tiltRef} className="tilt-root">
+          <div className="tilt-child">{children}</div>
+        </div>
+      )
+    }
+
+    function App() {
+      const [showTilt, setShowTilt] = React.useState(true)
+      return (
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              checked={showTilt}
+              onChange={e => setShowTilt(e.target.checked)}
+            />{' '}
+            show tilt
+          </label>
+          {showTilt ? (
+            <Tilt>
+              <div className="totally-centered">vanilla-tilt.js</div>
+            </Tilt>
+          ) : null}
+        </div>
+      )
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'))
+  </script>
+</body>

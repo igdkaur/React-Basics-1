@@ -1,0 +1,50 @@
+<!-- make UsernameForm that returns form -->
+
+<!-- the reason that this is happening is because 
+when you submit a form in the browser, 
+it automatically makes a post request 
+to the current URL with the form data. 
+We could see that if we looked at our network tab. -->
+
+
+<!-- If we were to render multiples of these, then they could conflict with one another. Querying the entire document breaks the encapsulation of this component because it means that you can't use this component in the context of other components in an application. We don't want to query the document. -->
+<!-- Any elements that have a name or an ID will be attached by that name and ID to this element's property of the form node. You can reference those by those names and IDs. -->
+
+
+
+
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel"> 
+
+    
+    function UsernameForm () {
+      function handleSubmit(event){
+        event.preventDefault()
+
+        console.log ("submitted")
+        // const username ="jek"
+        // const username =document.querySelector('input').value
+        const username =event.target.usernameInput.value
+        alert (`Hello ${username}`)
+      }
+      return (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor ="usernameInput"> Username : 
+            </label>
+            <input id = "usernameInput" type="text"/> 
+            <button type ="submit">Submit</button>
+            
+          </div>
+        </form>
+      )
+
+
+    }
+    ReactDOM.render(<UsernameForm/>, document.getElementById('root'))
+  </script>
+</body>

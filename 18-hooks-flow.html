@@ -1,3 +1,87 @@
+revisit
+https://github.com/donavon/hook-flow
+
+
+
+The first thing that we see is this app render start. 
+That's the first thing that happens when we call ReactDom.render our app. 
+It calls our app Function Component.
+
+The next thing that happens is we call react.useState and 
+immediately React is going to call this function 
+to retrieve the initial state for our show child state. 
+That's why we're getting this app useState callback called.
+
+
+Then, we call all these React useEffects, 
+but you'll notice that the logs 
+in those are not the next thing that appear in our console. 
+Instead, we actually create this element and 
+then we get a log to the console for app render end. 
+
+Once that happens, React actually is updating the DOM. 
+Then, asynchronously later, it's going to call our useEffect callbacks, 
+one at a time in the order in which they were called.
+
+app useEffect to no deps is the first one that appears. 
+We don't get our cleanup because there's no cleanup necessary yet, 
+because right now, we're just mounting the component, and we haven't had any updates yet.
+Next, we get our useEffects empty deps, right here. 
+We have an empty list of dependencies there and 
+then useEffect with dep. That's our show child's state. 
+That's the next thing that gets called here.
+
+what happens when we click on show child. 
+
+If I click show child, 
+then we're going to get an app render start. 
+When we click show child, that triggers this on change 
+to set show child to the checked value of our check box input.
+
+This set show child is going to trigger a re-render of our app, 
+which is why we get our app render start.
+
+We'll say app render start, and 
+we'll go through all of this code just like we had at the previous render, 
+except this time you'll notice we don't have an app use state callback, 
+we go straight from app render start to app render end.
+
+
+When you use a function callback to set the initial state in a useState hook, 
+it is only called when initially rendered.
+
+This is because React has already retrieved 
+the initial state value for our show child state, and 
+it doesn't need to retrieve that value again. 
+Any time you use a function call back for use state, 
+that function is only going to be called 
+when this component is initially rendered for the rest of the lifetime of that component.
+
+
+We go through all these useEffect cause again, 
+we create our element, and t
+hen we log to the console that the app render has finished. 
+Then React calls our child to start rendering of that child. 
+One thing that I want to stress here is that we're creating our element 
+which includes creating the child right here.
+
+You'll notice that we get to this line of code 
+before we start rendering the child. 
+The important thing to remember here is that just 
+because you create a React element, 
+doesn't mean that React element's function is going to get called, 
+because you're not calling the function, React is.
+
+React will only call that function 
+when that component is actually going to be rendered. 
+That's really important because you could say Const UI I will not render, and 
+render a whole bunch of these all day long, and 
+unless those things are added to some UI that's actually going to get rendered, 
+all that you're creating is a bunch of React element objects, and 
+you won't actually be calling into that child function.
+
+
+
 <body>
   <div id="root"></div>
   <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
