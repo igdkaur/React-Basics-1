@@ -1,198 +1,138 @@
-<!-- 
 <body>
   <div id="root"></div>
   <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
   <script type="text/babel">
- 
- function Cc ({text}) {
-  const len = text.length ? text.length : "no"
-   return (
-     <div>
-      {`the text has ${len} characters`}
-      
-      </div>
-   )
- }
-
-
- const element = (
-   <>
-   <Cc text = "Hello">  </Cc>
-
-   </>
- )
-
-    ReactDOM.render(element, document.getElementById('root'))
-  </script>
-</body>
-
-
-
-<!-- function Cc ({text}) {
-  return null
-} -->
-
-<!-- `${len}` -->
-
-<!-- function Cc ({text}) {
-  const len = text.length
-   return (
-     <div>
-      {len ?  `${len}`: "no" } 
-      </div>
-   )
- } -->
-
- <!-- the text has {len} characters  - the text has 5 characters -->
-
- <!-- the text has `${len}` characters - the text has `$5` characters -->
-
- <!-- { `the text has ${len} characters` } - the text has 5 characters -->
- <!-- the text has {text.length ? text.length : "no"} characters -->
-
- <!-- {"the text has {len} characters"} - the text has {len} characters -->
- <!-- {"the text has `${len}` characters"} the text has `${len}` characters --> -->
-
-
- <body>
-  <div id="root"></div>
-  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
-  <script type="text/babel">
-    const rootElement = document.getElementById('root')
-
-    const state = {eventCount: 0, username: ''}
+    const allItems = [
+      {id: 'a', value: 'apple'},
+      {id: 'o', value: 'orange'},
+      {id: 'g', value: 'grape'},
+      {id: 'p', value: 'pear'},
+    ]
 
     function App() {
-      function handleClick() {
-        setState({eventCount: state.eventCount + 1})
+      const [items, setItems] = React.useState(allItems)
+
+      function addItem() {
+        setItems([...items, allItems.find(i => !items.includes(i))])
       }
 
-      function handleChange(event) {
-        setState({username: event.target.value})
+      function removeItem(item) {
+        setItems(items.filter(i => i !== item))
       }
 
       return (
         <div>
-          <p>There have been {state.eventCount} events.</p>
-          <p>
-            <button onClick={handleClick}>Click Me</button>
-          </p>
-          <p>You typed: {state.username}</p>
-          <p>
-            <input onChange={handleChange} />
-          </p>
-        </div>
-      )
-    }
-
-    function setState(newState) {
-      Object.assign(state, newState)
-      renderApp()
-    }
-
-    function renderApp() {
-      ReactDOM.render(<App />, document.getElementById('root'))
-    }
-
-    renderApp()
-  </script>
-</body>
-
-
-
-
--------
-<body>
-  <div id="root"></div>
-  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
-  <script src="https://unpkg.com/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
-  <style>
-    
-    .tilt-root {
-      height : 150px;
-      background-color: red;
-      width: 200px;
-      background-image: -webkit-linear-gradient(
-        315deg,
-        #ff00ba 0%,
-        #fae713 100%
-      );
-      background-image: linear-gradient(135deg, #ff00ba 0%, #fae713 100%);
-      transform-style: preserve-3d;
-      will-change: transform;
-      transform: perspective(1000px) rotateX(0deg) rotateY(0deg)
-        scale3d(1, 1, 1);
-    }
-    .tilt-child {
-      position: absolute;
-      width: 50%;
-      height: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translateZ(30px) translateX(-50%) translateY(-50%);
-      box-shadow: 0 0 50px 0 rgba(51, 51, 51, 0.3);
-      background-color: white;
-    }
-    .totally-centered {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
-  <script type="text/babel">
-    function Tilt({children}) {
-      const tiltRef = React.useRef()
-
-      React.useEffect(() => {
-        const tiltNode = tiltRef.current
-        const vanillaTiltOptions = {
-          max: 25,
-          speed: 400,
-          glare: true,
-          'max-glare': 0.5,
-        }
-        VanillaTilt.init(tiltNode, vanillaTiltOptions)
-        return () => {
-          tiltNode.vanillaTilt.destroy()
-        }
-      }, [])
-
-      return (
-        <div ref={tiltRef} className="tilt-root">
-          <div className="tilt-child">{children}</div>
-        </div>
-      )
-    }
-
-    function App() {
-      const [showTilt, setShowTilt] = React.useState(true)
-      return (
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={showTilt}
-              onChange={e => setShowTilt(e.target.checked)}
-            />{' '}
-            show tilt
-          </label>
-          {showTilt ? (
-            <Tilt>
-              <div className="totally-centered">vanilla-tilt.js</div>
-            </Tilt>
-          ) : null}
+          <button disabled={items.length >= allItems.length} onClick={addItem}>
+            add item
+          </button>
+          <ul style={{listStyle: 'none', paddingLeft: 0}}>
+            {items.map(item => (
+              <li>
+                <button onClick={() => removeItem(item)}>remove</button>{' '}
+                <label htmlFor={`${item.value}-input`}>{item.value}</label>{' '}
+                <input id={`${item.value}-input`} defaultValue={item.value} />
+              </li>
+            ))}
+          </ul>
         </div>
       )
     }
 
     ReactDOM.render(<App />, document.getElementById('root'))
   </script>
-</body>
+
+  <script type="text/babel">
+    function FocusDemo() {
+      const [items, setItems] = React.useState([
+        {id: 'a', value: 'apple'},
+        {id: 'o', value: 'orange'},
+        {id: 'g', value: 'grape'},
+        {id: 'p', value: 'pear'},
+      ])
+
+      React.useEffect(() => {
+        const interval = setInterval(() => {
+          setItems(shuffle(items))
+        }, 1000)
+        return () => clearInterval(interval)
+      }, [])
+
+      return (
+        <div>
+          <div>
+            <h1>Without Key</h1>
+            {items.map(item => (
+              <input value={item.value} />
+            ))}
+          </div>
+          <div>
+            <h1>With Key as Index</h1>
+            {items.map((item, index) => (
+              <input key={index} value={item.value} />
+            ))}
+          </div>
+          <div>
+            <h1>With Key</h1>
+            {items.map(item => (
+              <input key={item.id} value={item.value} />
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    function shuffle(originalArray) {
+      const array = [...originalArray]
+      let currentIndex = array.length
+      let temporaryValue
+      let randomIndex
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex)
+        currentIndex -= 1
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex]
+        array[currentIndex] = array[randomIndex]
+        array[randomIndex] = temporaryValue
+      }
+      return array
+    }
+    // uncomment this line to demo:
+    // ReactDOM.render(<FocusDemo />, document.getElementById('root'))
+  </script>
+
+
+-------------------
+
+
+const allItems = [
+{ id: "a", value: "apple" },
+{ id: "o", value: "orange" },
+{ id: "g", value: "grapes" },
+{ id: "p", value: "pears" },
+];
+function App() {
+
+return (
+  <>
+  
+  <button > Add </button> {' '}
+  <button > Remove </button>
+
+
+  <div>
+    {allItems.map((item) => (
+      <ul>
+        <li>{item.value} </li>
+      </ul>
+    ))}
+  </div>
+  </>
+);
+}
+
+
+-------------------
